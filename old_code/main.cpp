@@ -19,8 +19,8 @@ bool isprime(int p) {
   return 1;
 }
 
-int main1() {
-  /*int x, p, A, B;
+int main() {
+  int x, p, A, B;
   int attempts = 0;
   while (1) {
     attempts++;
@@ -29,25 +29,29 @@ int main1() {
   }
   x = rand() % p;
   A = rand() % p;
-  B = modpow(A,x,p);*/
-  cout << "PROVER-private: Pick x p A" << endl;
-  int x, p, A; cin >> x >> p >> A;
-  int B = modpow(A,x,p);
+  B = modpow(A,x,p);
 
-  cout << "PROVER-public: (A,B,p) = " << A << ' '  << B << ' ' << p << endl;
+  printf("Ppriv: x=%d\n", x);
+  printf("Ppub: A=%d, B=%d, p=%d\n",A,B,p);
 
-  while (1) {
-    cout << "PROVER-private: Pick r between 0 and " << p-1 << endl;
-    int r; cin >> r;
+  for (int i=0; i < 100; i++) {
+    int r = rand() % p;
+    printf("Ppriv: r=%d\n", r);
     int h = modpow(A, r, p);
-    cout << "PROVER-public: h = " << h << endl;
+    printf("Ppub: h=%d\n", h);
 
-    cout << "VERIFIER: Pick b = 0 or 1" << endl;
-    int b; cin >> b; b = bool(b);
+    int b = rand() % 2;
+    printf("V: b=%d\n", b);
 
     int s = (r+b*x) % (p-1);
-    cout << "PROVER-public: s = " << s << endl;
-    bool ok = modpow(A,s,p) == h * 1ll * modpow(B,b,p) % p;
-    cout << "VERIFIER " << ok;
+    printf("Ppub: s=%d\n", s);
+    int ok = modpow(A,s,p) == h * 1ll * modpow(B,b,p) % p;
+    printf("V: ok=%d\n", ok);
+    if (!ok) {
+      printf("FAIL\n");
+      break;
+    }
   }
+  printf("x was %d\n", x);
+  printf("%d attempts\n", attempts);
 }
