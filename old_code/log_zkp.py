@@ -32,6 +32,20 @@ print(f'{p=} after {cnt} attempts')
 
 ### real "ZKP" starts here ###
 
+class prover(x): #P receives an integer in Z\p upon instantiation
+    self.x = x
+    self.r = None #random value for comittement
+    self.A = randint(0,p-1)
+    self.B = modpow(A,x,p) # B = A^x
+
+    def communicate(content):
+        with open self.logfile as f:
+
+    def gen_r(self):
+        return random(0, p-1)
+
+
+
 #p has:
 x = randint(0,p-1) #don't disclose
 A = randint(0,p-1)
